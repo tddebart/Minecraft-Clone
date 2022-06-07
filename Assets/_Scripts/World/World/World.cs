@@ -1,12 +1,15 @@
 using System.Collections.Generic;
 using System.Threading;
 using Baracuda.Monitoring;
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
+#endif
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 using Object = UnityEngine.Object;
 
+[ExecuteInEditMode]
 public partial class World : MonitoredBehaviour
 {
     public static World Instance;
@@ -38,9 +41,9 @@ public partial class World : MonitoredBehaviour
     private void OnValidate()
     {
         Instance = this;
+        isRunning = false;
         loadThread?.Abort();
         chunkManager.terrainGenerator.Initialize();
-        EditorApplication.QueuePlayerLoopUpdate();
     }
 
     private void GenerateWorldEditor()
@@ -69,6 +72,8 @@ public partial class World : MonitoredBehaviour
 
     private void Start()
     {
+        if (!Application.isPlaying) return;
+        
         ClearWorldEditor();
         isRunning = true;
         
@@ -229,6 +234,7 @@ public partial class World : MonitoredBehaviour
     {
         loadThread?.Abort();
         isRunning = false;
+        chunkRenderQueue.Clear();
     }
     
     

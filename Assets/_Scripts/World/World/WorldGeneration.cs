@@ -5,7 +5,6 @@ using System.Diagnostics;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
-[ExecuteAlways]
 public partial class World
 {
     private Dictionary<Vector3Int, ChunkSection> chunkUpdates = new();

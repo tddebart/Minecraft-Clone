@@ -203,8 +203,8 @@ Camera:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.46666667, g: 0.8156863, b: 0.9137255, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -244,8 +244,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 70, z: -10}
+  m_LocalRotation: {x: -0.024783965, y: 0.87316895, z: -0.040428083, w: -0.48510557}
+  m_LocalPosition: {x: 10.182266, y: 77.91857, z: 0.8635111}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -448,12 +448,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b68c749bc0d6c5469766e97ffc0f830, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderDistance: 5
+  renderDistance: 2
   seed: 49
   playerPos: {x: 0, y: 0, z: 0}
   player: {fileID: 1755240904}
   chunkManager: {fileID: 1339477059}
-  firstTimeTaken: 8152
+  firstTimeTaken: 2059
 --- !u!4 &2106531821
 Transform:
   m_ObjectHideFlags: 0
