@@ -16,7 +16,7 @@ public class ChunkSectionRenderer : MonoBehaviour
         meshFilter = GetComponent<MeshFilter>();
         meshRenderer = GetComponent<MeshRenderer>();
         meshFilter.sharedMesh = new Mesh();
-        mesh = meshFilter.mesh;
+        mesh = meshFilter.sharedMesh;
         mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
     }
 

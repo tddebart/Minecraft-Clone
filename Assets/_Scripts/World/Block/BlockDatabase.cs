@@ -14,16 +14,17 @@ public class BlockDatabase : MonoBehaviour
     
     void Awake()
     {
-        Instance = this;
+        OnValidate();
     }
 
-    private void Start()
+    private void OnValidate()
     {
         blocks = new BlockData[blockDatabaseSO.BlockData.Length];
         foreach (var blockData in blockDatabaseSO.BlockData)
         {
             blocks[(int)blockData.blockId] = blockData;
         }
+        Instance = this;
     }
 
     public static BlockData GetData(BlockId id)

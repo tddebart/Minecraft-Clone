@@ -12,7 +12,7 @@ public class ClassicOverworldGenerator : TerrainGenerator
     private Chunk processChunk;
     private int[,] heightMap = new int[WorldConstants.chunk_size, WorldConstants.chunk_size];
 
-    private void Start()
+    public override void Initialize()
     {
         noiseGenerator = new NoiseGenerator(World.Instance.seed);
     }

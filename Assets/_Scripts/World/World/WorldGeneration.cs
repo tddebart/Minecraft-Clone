@@ -1,14 +1,15 @@
 ﻿
-using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
+[ExecuteAlways]
 public partial class World
 {
     private Dictionary<Vector3Int, ChunkSection> chunkUpdates = new();
-    public Queue<ChunkSection> chunkRenderQueue = new();
+    public ConcurrentQueue<ChunkSection> chunkRenderQueue = new();
     
     public void AddUnloadedBlock(Vector3Int pos, Block block)
     {
@@ -135,12 +136,15 @@ public partial class World
 
     private void Update()
     {
+        if (!isRunning) return;
+        
         if(chunkRenderQueue.Count > 0)
         {
-            var chunk = chunkRenderQueue.Dequeue();
-            chunk.UpdateRenderer();
+            if (chunkRenderQueue.TryDequeue(out var chunk))
+            {
+                chunk.UpdateRenderer();
+            } 
         }
-        
         playerPos = Vector3Int.RoundToInt(player.transform.position);
     }
 }

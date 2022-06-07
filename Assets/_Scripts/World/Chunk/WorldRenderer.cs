@@ -13,6 +13,11 @@ public class WorldRenderer : MonoBehaviour
 
     private void Awake()
     {
+        OnValidate();
+    }
+
+    private void OnValidate()
+    {
         Instance = this;
     }
 

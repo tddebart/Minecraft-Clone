@@ -1,10 +1,8 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
-using System.Threading.Tasks;
 using Baracuda.Monitoring;
+using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 using Object = UnityEngine.Object;
@@ -34,20 +32,53 @@ public partial class World : MonitoredBehaviour
     protected override void Awake()
     {
         base.Awake();
+        OnValidate();
+    }
+
+    private void OnValidate()
+    {
         Instance = this;
+        loadThread?.Abort();
+        chunkManager.terrainGenerator.Initialize();
+        EditorApplication.QueuePlayerLoopUpdate();
+    }
+
+    private void GenerateWorldEditor()
+    {
+        isRunning = true;
+        loadThread = new Thread(LoadChunks);
+        loadThread.Start();
+    }
+
+    private void ClearWorldEditor()
+    {
+        loadThread?.Abort();
+        chunkManager.Clear();
+        unloadedBlocks.Clear();
+        
+        chunkRenderQueue.Clear();
+        chunkUpdates.Clear();
+        
+        foreach (var chunk in FindObjectsOfType<ChunkSectionRenderer>())
+        {
+            DestroyImmediate(chunk.gameObject);
+        }
+        
+        isRunning = false;
     }
 
     private void Start()
     {
+        ClearWorldEditor();
+        isRunning = true;
+        
         if (seed == 0)
         {
             seed = new System.Random().Next(424, 325322);
         }
         
-        loadThread = new Thread(LoadChunks);
-        loadThread.Start();
-        // StartCoroutine(LoadChunks(Vector3Int.zero));
-        
+        GenerateWorldEditor();
+
         // await Task.Delay(1500).ConfigureAwait(true);
 
         // foreach (var chunk in chunkManager.chunks.Values)
@@ -194,8 +225,44 @@ public partial class World : MonitoredBehaviour
     }
 
 
-    protected override void OnDestroy()
+    private void OnDisable()
     {
         loadThread?.Abort();
+        isRunning = false;
     }
+    
+    
+#if UNITY_EDITOR
+
+    private void OnDrawGizmos()
+    {
+        if (!Application.isPlaying)
+        {
+            UnityEditor.EditorApplication.QueuePlayerLoopUpdate();
+        }
+    }
+
+    [CustomEditor(typeof(World))]
+    public class WorldEditor : Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            var world = target as World;
+            if (GUILayout.Button("Generate World"))
+            {
+                world.ClearWorldEditor();
+                EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+                world.GenerateWorldEditor();
+            }
+
+            if (GUILayout.Button("Clear World"))
+            {
+                world.ClearWorldEditor();
+                EditorSceneManager.SaveOpenScenes();
+            }
+
+            base.OnInspectorGUI();
+        }
+    }
+#endif
 }

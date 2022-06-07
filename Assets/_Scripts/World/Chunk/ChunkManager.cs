@@ -78,4 +78,9 @@ public class ChunkManager : MonoBehaviour
         return terrainGenerator.GetBiomeId(
             GetChunk(new Vector2Int(pos.x / WorldConstants.chunk_size, pos.y / WorldConstants.chunk_size)), pos.x, pos.y);
     }
+
+    public void Clear()
+    {
+        chunks.Clear();
+    }
 }
