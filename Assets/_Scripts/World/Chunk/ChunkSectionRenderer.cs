@@ -33,6 +33,10 @@ public class ChunkSectionRenderer : MonoBehaviour
         mesh.SetVertices(solidMesh.vertices);
         mesh.SetTriangles(solidMesh.triangles, 0);
         mesh.SetTriangles(liquidMesh.triangles.Select(val => val + (solidMesh.vertices.Count-liquidMesh.vertices.Count)).ToList(), 1);
+        
+        solidMesh.sides.AddRange(liquidMesh.sides);
+        mesh.SetUVs(2, solidMesh.sides);
+        
         solidMesh.uv.AddRange(liquidMesh.uv);
         mesh.SetUVs(0, solidMesh.uv);
         mesh.RecalculateNormals();
