@@ -89,13 +89,9 @@ public class Chunk : IChunk
     {
         AddSectionsForBlock(pos.y);
 
-        if (OutOfBounds(pos))
+        if (OutOfBounds(pos) || isLoaded)
         {
             var location = ToWorldPos(pos.x, pos.z);
-            if (location.x < 0 || location.y < 0)
-            {
-                return;
-            }
 
             World.Instance.AddUnloadedBlock(new Vector3Int(location.x, pos.y, location.y), block);
             return;
@@ -215,7 +211,25 @@ public class Chunk : IChunk
     // Set the block at the given position in chunk coordinates
     public void SetBlockInChunk(Vector3Int pos, Block block)
     {
+        AddSectionsForBlock(pos.y);
         
+        chunkSections[pos.y/WorldConstants.chunk_size].SetBlockInSection(new Vector3Int(pos.x, pos.y%WorldConstants.chunk_size, pos.z), block);
+        
+        // If the highest block was destroyed
+        if (pos.y == highestBlocks[pos.x, pos.z])
+        {
+            var highBlock = GetBlock(new Vector3Int(pos.x, pos.y--, pos.z));
+            while (!highBlock.GetData().isOpaque && pos.y >= 0)
+            {
+                highBlock = GetBlock(new Vector3Int(pos.x, pos.y--, pos.z));
+            }
+        }
+        
+        // if placed block is the highest now
+        else if (pos.y > highestBlocks[pos.x, pos.z])
+        {
+            highestBlocks[pos.x, pos.z] = pos.y;
+        }
     }
 
     public void Load(TerrainGenerator generator)

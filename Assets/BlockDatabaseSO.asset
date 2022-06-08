@@ -19,26 +19,62 @@ MonoBehaviour:
       up: {x: 0, y: 0}
       down: {x: 0, y: 0}
       side: {x: 0, y: 0}
-    isOpaque: 0
+    Opacity: 0
+    isSemiTransparent: 0
     isSolid: 0
   - blockId: 1
     textureData:
       up: {x: 13, y: 10}
       down: {x: 4, y: 0}
       side: {x: 9, y: 29}
-    isOpaque: 1
+    Opacity: 15
+    isSemiTransparent: 0
     isSolid: 1
   - blockId: 2
     textureData:
       up: {x: 4, y: 0}
       down: {x: 4, y: 0}
       side: {x: 4, y: 0}
-    isOpaque: 1
+    Opacity: 15
+    isSemiTransparent: 0
     isSolid: 1
   - blockId: 3
+    textureData:
+      up: {x: 3, y: 12}
+      down: {x: 3, y: 12}
+      side: {x: 3, y: 12}
+    Opacity: 15
+    isSemiTransparent: 0
+    isSolid: 1
+  - blockId: 4
     textureData:
       up: {x: 15, y: 11}
       down: {x: 15, y: 11}
       side: {x: 15, y: 11}
-    isOpaque: 0
+    Opacity: 0
+    isSemiTransparent: 1
     isSolid: 0
+  - blockId: 5
+    textureData:
+      up: {x: 15, y: 21}
+      down: {x: 15, y: 21}
+      side: {x: 15, y: 21}
+    Opacity: 15
+    isSemiTransparent: 0
+    isSolid: 1
+  - blockId: 6
+    textureData:
+      up: {x: 11, y: 17}
+      down: {x: 11, y: 17}
+      side: {x: 13, y: 28}
+    Opacity: 15
+    isSemiTransparent: 0
+    isSolid: 1
+  - blockId: 7
+    textureData:
+      up: {x: 12, y: 0}
+      down: {x: 12, y: 0}
+      side: {x: 12, y: 0}
+    Opacity: 14
+    isSemiTransparent: 0
+    isSolid: 1

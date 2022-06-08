@@ -40,7 +40,7 @@ public static class ChunkMeshBuilder
 
                         if(block.id == 0) continue;
                         
-                        var activeMesh = block.GetData().isOpaque ? solidMesh : liquidMesh;
+                        var activeMesh = block.GetData().isSemiTransparent ? liquidMesh : solidMesh;
 
                         foreach (var direction in directions)
                         {
@@ -62,7 +62,7 @@ public static class ChunkMeshBuilder
     {
         SetFaceVertices(dir, pos, chunkMesh);
 
-        if (blockData.isOpaque)
+        if (blockData.Opacity != 0)
         {
             GetVertexAOSides(dir,pos,chunkMesh,section);
         }
@@ -130,30 +130,30 @@ public static class ChunkMeshBuilder
     {
         if (direction == Direction.up)
         {
-            var forwards = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.up + Vector3Int.forward).GetData().isOpaque);
-            var backwards = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.up + Vector3Int.back).GetData().isOpaque);
-            var left = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.up + Vector3Int.left).GetData().isOpaque);
-            var right = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.up + Vector3Int.right).GetData().isOpaque);
+            var forwards = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.up + Vector3Int.forward).GetData().Opacity != 0);
+            var backwards = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.up + Vector3Int.back).GetData().Opacity != 0);
+            var left = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.up + Vector3Int.left).GetData().Opacity != 0);
+            var right = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.up + Vector3Int.right).GetData().Opacity != 0);
             
             meshData.sides.Add(new Vector3( // -+
                 left,
                 forwards,
-                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.up + Vector3Int.left + Vector3Int.forward).GetData().isOpaque)));
+                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.up + Vector3Int.left + Vector3Int.forward).GetData().Opacity != 0)));
             
             meshData.sides.Add(new Vector3( // ++
                 forwards,
                 right,
-                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.up + Vector3Int.forward + Vector3Int.right).GetData().isOpaque)));
+                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.up + Vector3Int.forward + Vector3Int.right).GetData().Opacity != 0)));
             
             meshData.sides.Add(new Vector3( // +-
                 right,
                 backwards,
-                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.up + Vector3Int.right + Vector3Int.back).GetData().isOpaque)));
+                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.up + Vector3Int.right + Vector3Int.back).GetData().Opacity != 0)));
             
             meshData.sides.Add(new Vector3( // --
                 backwards,
                 left,
-                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.up + Vector3Int.back + Vector3Int.left).GetData().isOpaque)));
+                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.up + Vector3Int.back + Vector3Int.left).GetData().Opacity != 0)));
 
         }
         else if (direction == Direction.down)
@@ -163,31 +163,31 @@ public static class ChunkMeshBuilder
             // +-+
             // --+
 
-            var backwards = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.down + Vector3Int.back).GetData().isOpaque);
-            var forwards = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.down + Vector3Int.forward).GetData().isOpaque);
-            var left = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.down + Vector3Int.left).GetData().isOpaque);
-            var right = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.down + Vector3Int.right).GetData().isOpaque);
+            var backwards = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.down + Vector3Int.back).GetData().Opacity != 0);
+            var forwards = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.down + Vector3Int.forward).GetData().Opacity != 0);
+            var left = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.down + Vector3Int.left).GetData().Opacity != 0);
+            var right = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.down + Vector3Int.right).GetData().Opacity != 0);
 
             meshData.sides.Add(new Vector3( // --
                 backwards,
                 left,
-                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.down + Vector3Int.back + Vector3Int.left).GetData().isOpaque)));
+                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.down + Vector3Int.back + Vector3Int.left).GetData().Opacity != 0)));
 
             meshData.sides.Add(new Vector3( // +-
                 right,
                 backwards,
-                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.down + Vector3Int.right + Vector3Int.back).GetData().isOpaque)));
+                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.down + Vector3Int.right + Vector3Int.back).GetData().Opacity != 0)));
             
             meshData.sides.Add(new Vector3( // ++
                 forwards,
                 right,
-                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.down + Vector3Int.forward + Vector3Int.right).GetData().isOpaque)));
+                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.down + Vector3Int.forward + Vector3Int.right).GetData().Opacity != 0)));
             
             
             meshData.sides.Add(new Vector3( // -+
                 left,
                 forwards,
-                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.down + Vector3Int.left + Vector3Int.forward).GetData().isOpaque)));
+                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.down + Vector3Int.left + Vector3Int.forward).GetData().Opacity != 0)));
             
         }
         else if (direction == Direction.left)
@@ -196,30 +196,30 @@ public static class ChunkMeshBuilder
             // -++
             // -+-
             // ---
-            var down = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.left + Vector3Int.down).GetData().isOpaque);
-            var up = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.left + Vector3Int.up).GetData().isOpaque);
-            var forwards = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.left + Vector3Int.forward).GetData().isOpaque);
-            var backwards = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.left + Vector3Int.back).GetData().isOpaque);
+            var down = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.left + Vector3Int.down).GetData().Opacity != 0);
+            var up = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.left + Vector3Int.up).GetData().Opacity != 0);
+            var forwards = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.left + Vector3Int.forward).GetData().Opacity != 0);
+            var backwards = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.left + Vector3Int.back).GetData().Opacity != 0);
 
             meshData.sides.Add(new Vector3( // -+
                 down,
                 forwards,
-                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.left + Vector3Int.down + Vector3Int.forward).GetData().isOpaque)));
+                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.left + Vector3Int.down + Vector3Int.forward).GetData().Opacity != 0)));
             
             meshData.sides.Add(new Vector3( // ++
                 forwards,
                 up,
-                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.left + Vector3Int.forward + Vector3Int.up).GetData().isOpaque)));
+                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.left + Vector3Int.forward + Vector3Int.up).GetData().Opacity != 0)));
             
             meshData.sides.Add(new Vector3( // +-
                 up,
                 backwards,
-                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.left + Vector3Int.up + Vector3Int.back).GetData().isOpaque)));
+                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.left + Vector3Int.up + Vector3Int.back).GetData().Opacity != 0)));
             
             meshData.sides.Add(new Vector3( // --
                 backwards,
                 down,
-                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.left + Vector3Int.back + Vector3Int.down).GetData().isOpaque)));
+                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.left + Vector3Int.back + Vector3Int.down).GetData().Opacity != 0)));
         }
         else if (direction == Direction.right)
         {
@@ -227,30 +227,30 @@ public static class ChunkMeshBuilder
             // ++-
             // +++
             // +-+
-            var down = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.right + Vector3Int.down).GetData().isOpaque);
-            var up = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.right + Vector3Int.up).GetData().isOpaque);
-            var forwards = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.right + Vector3Int.forward).GetData().isOpaque);
-            var backwards = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.right + Vector3Int.back).GetData().isOpaque);
+            var down = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.right + Vector3Int.down).GetData().Opacity != 0);
+            var up = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.right + Vector3Int.up).GetData().Opacity != 0);
+            var forwards = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.right + Vector3Int.forward).GetData().Opacity != 0);
+            var backwards = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.right + Vector3Int.back).GetData().Opacity != 0);
             
             meshData.sides.Add(new Vector3( // --
                 down,
                 backwards,
-                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.right + Vector3Int.down + Vector3Int.back).GetData().isOpaque)));
+                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.right + Vector3Int.down + Vector3Int.back).GetData().Opacity != 0)));
             
             meshData.sides.Add(new Vector3( // +-
                 backwards,
                 up,
-                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.right + Vector3Int.back + Vector3Int.up).GetData().isOpaque)));
+                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.right + Vector3Int.back + Vector3Int.up).GetData().Opacity != 0)));
             
             meshData.sides.Add(new Vector3( // ++
                 up,
                 forwards,
-                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.right + Vector3Int.up + Vector3Int.forward).GetData().isOpaque)));
+                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.right + Vector3Int.up + Vector3Int.forward).GetData().Opacity != 0)));
             
             meshData.sides.Add(new Vector3( // -+
                 forwards,
                 down,
-                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.right + Vector3Int.forward + Vector3Int.down).GetData().isOpaque)));
+                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.right + Vector3Int.forward + Vector3Int.down).GetData().Opacity != 0)));
             
         }
         else if (direction == Direction.backwards)
@@ -260,30 +260,30 @@ public static class ChunkMeshBuilder
             // ++-
             // +--
 
-            var down = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.back + Vector3Int.down).GetData().isOpaque);
-            var left = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.back + Vector3Int.left).GetData().isOpaque);
-            var up = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.back + Vector3Int.up).GetData().isOpaque);
-            var right = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.back + Vector3Int.right).GetData().isOpaque);
+            var down = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.back + Vector3Int.down).GetData().Opacity != 0);
+            var left = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.back + Vector3Int.left).GetData().Opacity != 0);
+            var up = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.back + Vector3Int.up).GetData().Opacity != 0);
+            var right = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.back + Vector3Int.right).GetData().Opacity != 0);
             
             meshData.sides.Add(new Vector3( // --
                 down,
                 left,
-                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.back + Vector3Int.down + Vector3Int.left).GetData().isOpaque)));
+                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.back + Vector3Int.down + Vector3Int.left).GetData().Opacity != 0)));
             
             meshData.sides.Add(new Vector3( // -+
                 left,
                 up,
-                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.back + Vector3Int.left + Vector3Int.up).GetData().isOpaque)));
+                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.back + Vector3Int.left + Vector3Int.up).GetData().Opacity != 0)));
             
             meshData.sides.Add(new Vector3( // ++
                 up,
                 right,
-                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.back + Vector3Int.up + Vector3Int.right).GetData().isOpaque)));
+                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.back + Vector3Int.up + Vector3Int.right).GetData().Opacity != 0)));
             
             meshData.sides.Add(new Vector3( // +-
                 right,
                 down,
-                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.back + Vector3Int.right + Vector3Int.down).GetData().isOpaque)));
+                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.back + Vector3Int.right + Vector3Int.down).GetData().Opacity != 0)));
         }
         else if (direction == Direction.forwards)
         {
@@ -292,30 +292,30 @@ public static class ChunkMeshBuilder
             // -++
             // --+
 
-            var down = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.forward + Vector3Int.down).GetData().isOpaque);
-            var left = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.forward + Vector3Int.left).GetData().isOpaque);
-            var up = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.forward + Vector3Int.up).GetData().isOpaque);
-            var right = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.forward + Vector3Int.right).GetData().isOpaque);
+            var down = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.forward + Vector3Int.down).GetData().Opacity != 0);
+            var left = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.forward + Vector3Int.left).GetData().Opacity != 0);
+            var up = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.forward + Vector3Int.up).GetData().Opacity != 0);
+            var right = Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.forward + Vector3Int.right).GetData().Opacity != 0);
             
             meshData.sides.Add(new Vector3( // +-
                 down,
                 right,
-                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.forward + Vector3Int.down + Vector3Int.right).GetData().isOpaque)));
+                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.forward + Vector3Int.down + Vector3Int.right).GetData().Opacity != 0)));
             
             meshData.sides.Add(new Vector3( // ++
                 right,
                 up,
-                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.forward + Vector3Int.right + Vector3Int.up).GetData().isOpaque)));
+                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.forward + Vector3Int.right + Vector3Int.up).GetData().Opacity != 0)));
             
             meshData.sides.Add(new Vector3( // -+
                 up,
                 left,
-                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.forward + Vector3Int.up + Vector3Int.left).GetData().isOpaque)));
+                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.forward + Vector3Int.up + Vector3Int.left).GetData().Opacity != 0)));
             
             meshData.sides.Add(new Vector3( // --
                 left,
                 down,
-                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.forward + Vector3Int.left + Vector3Int.down).GetData().isOpaque)));
+                Convert.ToSingle(chunk.GetBlock(pos + Vector3Int.forward + Vector3Int.left + Vector3Int.down).GetData().Opacity != 0)));
             
         }
         else

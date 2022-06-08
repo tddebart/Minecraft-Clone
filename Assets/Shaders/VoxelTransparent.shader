@@ -26,6 +26,8 @@ Shader "VoxelTransparent"
 
 			#include "UnityCG.cginc"
 
+			float _TextureOn;
+
 			struct appdata
 			{
 				float4 vertex : POSITION;
@@ -50,7 +52,14 @@ Shader "VoxelTransparent"
 
 			fixed4 fragFunction(v2f i) : SV_Target
 			{
-				fixed4 color = tex2D(_MainTex, i.uv);
+				fixed4 color;
+				if(_TextureOn)
+				{
+					color = tex2D(_MainTex, i.uv);
+				} else
+				{
+					color = fixed4(1,1,1,1);
+				}
 				clip(color.a - .97);
 				return color;
 			}
@@ -157,8 +166,8 @@ Shader "VoxelTransparent"
 				{
 					v.color *= AOToOcclusion(vertexAO(v.sides.x, v.sides.y, v.sides.z));
 				}
-				
 				o.color = v.color;
+				o.color.a = 1;
 				return o;
 			}
 

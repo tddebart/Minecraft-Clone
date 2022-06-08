@@ -152,7 +152,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 311a429f979249f78e0b89443dc2943d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  biomes: []
+  biomes:
+  - biomeId: 1
+    SurfaceBlock: 1
+    UnderSurfaceBlock: 2
+    UnderGroundBlock: 3
+    UnderWaterBlock: 5
+    WaterSurfaceBlock: 4
+    WaterBlock: 4
+    TreeFrequency: 100
+    TreeTypes: 00000000
 --- !u!4 &804550253
 Transform:
   m_ObjectHideFlags: 0
@@ -448,12 +457,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b68c749bc0d6c5469766e97ffc0f830, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderDistance: 2
+  renderDistance: 5
   seed: 49
   playerPos: {x: 0, y: 0, z: 0}
   player: {fileID: 1755240904}
   chunkManager: {fileID: 1339477059}
-  firstTimeTaken: 2059
+  firstTimeTaken: 3778
 --- !u!4 &2106531821
 Transform:
   m_ObjectHideFlags: 0

@@ -30,8 +30,6 @@ public partial class World
                 if (chunk.isLoaded)
                 {
                     chunk.SetBlockInChunk(new Vector3Int(blockPos.x, block.pos.y, blockPos.y), block.block);
-                    
-                    // update ambientocclusion
                 }
                 else
                 {

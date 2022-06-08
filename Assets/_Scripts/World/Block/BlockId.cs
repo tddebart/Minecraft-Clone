@@ -4,5 +4,9 @@ public enum BlockId
     Air,
     Grass,
     Dirt,
-    Water
+    Stone,
+    Water,
+    Sand,
+    OakLog,
+    OakLeaves
 }
